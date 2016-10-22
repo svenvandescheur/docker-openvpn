@@ -16,11 +16,13 @@ set -o pipefail
 
 
 # Set up correct variables
-DNS=`cat /etc/hosts | grep dnsmasq | awk '{print $1}'` || true
-if [[ ! $DNS ]]
+if [[ `ping -c1 dnsmasq` ]]
 then
-    echo "Using default DNS"
-    DNS=8.8.8.8
+	echo "Using \"dnsmasq\" as DNS"
+	DNS="dnsmasq"
+else
+	echo "Using default DNS"
+    DNS="8.8.8.8"
 fi
 
 
